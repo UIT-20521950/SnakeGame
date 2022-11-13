@@ -1,4 +1,3 @@
-// code tai day
 #include <iostream>
 #include <windows.h>
 #include <cstdlib>
@@ -6,7 +5,7 @@
 using namespace std;
 const int width = 20;
 const int height = 20;
-bool gameOver = false;
+bool gameOver = false, game = false;
 struct Point
 {
     int x, y;
@@ -28,13 +27,17 @@ public:
     struct Point bom;
     int nTail;
     int score;
+    string head = "X";
+    string body = "x";
+    string bom_game = "@";
+    HANDLE console_color = GetStdHandle(STD_OUTPUT_HANDLE);
     Snake()
     {
         nTail = 2;
         Tail[0].x = snake.x;
         Tail[0].y = snake.y;
-        Tail[1].x = snake.x+1;
-        Tail[1].y = snake.y+1;
+        Tail[1].x = snake.x + 1;
+        Tail[1].y = snake.y + 1;
     };
     void Setup()
     {
@@ -48,11 +51,14 @@ public:
         if (gameOver == false)
             cout << "Setup finish" << endl;
     }
-    void Draw()
+    void Draw(string head, string body, string bom_game)
     {
         system("cls");
         for (int i = 0; i < width + 1; i++)
+        {
             cout << "# "; // linetop
+        }
+
         cout << endl;
         for (int i = 0; i < height; i++)
         {
@@ -64,9 +70,12 @@ public:
                     cout << " ";
                 // ben trong tro choi chua con ran
                 if (i == snake.y && j == snake.x)
-                    cout << "X"; // sanke
+                    cout << head; // sanke
                 else if (i == bom.y && j == bom.x)
-                    cout << "0";
+                {
+                        cout << bom_game;
+                }
+
                 else
                 {
                     bool print = false;
@@ -74,7 +83,7 @@ public:
                     {
                         if (Tail[k].x == j && Tail[k].y == i)
                         {
-                            cout << "x";
+                            cout << body;
                             print = true;
                         }
                     }
@@ -88,7 +97,8 @@ public:
         }
         for (int i = 0; i < width + 1; i++)
             cout << "# "; // linebot
-        cout << endl << endl;
+        cout << endl
+             << endl;
         cout << "Score: " << score;
     }
     void Input()
@@ -143,7 +153,7 @@ public:
         Tail[0].y = snake.y;
         for (int i = nTail; i > 0; i--)
         {
-            Tail[i] = Tail[i-1];
+            Tail[i] = Tail[i - 1];
         }
         if (snake.x > width || snake.x < 0 || snake.y > height || snake.y < 0)
         {
@@ -159,9 +169,39 @@ public:
         if (snake.x == bom.x && snake.y == bom.y)
         {
             score++;
-            bom.x = rand() % width;
-            bom.y = rand() % height;
+            bom.x = rand() % (width - 1) + 1;
+            bom.y = rand() % (height - 1) + 1;
             nTail++;
+        }
+    }
+    void skin()
+    {
+        int c;
+        cout << "\n========================\n";
+        cout << "\t\t1. Snake: xxX  - 0";
+        cout << "\n\t\t2. Snake: oo0  - $";
+        cout << "\n\t\t3. Snake default";
+        cout << "\n========================\n";
+        cout << "\n Selcet your choice: ";
+        cin >> c;
+        switch (c)
+        {
+        case 1:
+        {
+            head = "\x1B[31mX\033[0m";
+            body = "\x1B[33mx\033[0m";
+            bom_game = "\x1B[93m0\033[0m";
+        }
+        break;
+        case 2:
+        {
+            head = "\x1B[31m0\033[0m";
+            body = "\x1B[33mo\033[0m";
+            bom_game = "\x1B[93m$\033[0m";
+        }
+        break;
+        default:
+            break;
         }
     }
     void play()
@@ -172,15 +212,64 @@ public:
         {
             Input();
             Control();
-            Draw();
+            Draw(head, body, bom_game);
             Sleep(300);
         }
+        system("cls");
+        cout << "\n========================\n";
+        cout << "\n     \x1B[36mHight score: \033[0m" << score << "\n";
+        cout << "\n========================\n";
     }
 };
-
+void menu(Snake a)
+{
+    int c;
+    for (int i = 0; i < 25; i++)
+    {
+        cout << "- ";
+    }
+    cout << endl;
+    for (int i = 0; i < 2; i++)
+    {
+        cout << "\t";
+    }
+    cout << "Menu Game Snake \n";
+    for (int i = 0; i < 2; i++)
+    {
+        cout << "\t";
+    }
+    cout << "1. Select 1 to Start Game\n";
+    for (int i = 0; i < 2; i++)
+    {
+        cout << "\t";
+    }
+    cout << "2. Put any key to Quit Game\n";
+    for (int i = 0; i < 25; i++)
+    {
+        cout << "- ";
+    }
+    cout << "\n Selcet your choice: ";
+    cin >> c;
+    switch (c)
+    {
+    case 1:
+        a.skin();
+        a.play();
+        break;
+    default:
+        c = 2;
+        if (c == 2)
+            game = true;
+        ;
+        break;
+    }
+}
 int main()
 {
     Snake ran;
-    ran.play();
+    while (!game)
+    {
+        menu(ran);
+    }
     return 0;
 }
