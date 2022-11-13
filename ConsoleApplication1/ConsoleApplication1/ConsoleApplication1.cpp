@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int len = 4;
+int len = 6;
 void Wall();
 
 struct Point {
@@ -58,10 +58,17 @@ void Snake::Move(int t, int w)
 	a[0].x = t;
 	a[0].y = w;
 }
-bool Snake::GameOver(int x, int y)
+bool Snake::GameOver(int t, int w)
 {
-	if (x == 10 || x == 95 || y == 1 || y == 25) return false;
+	int kt1 = 0, kt2 = 0;
+	if (t == 10 || t == 95 || w== 1 || w == 25) kt1 = 1;
+	for (int i = 1; i < len; i++) {
+		if (a[0].x == a[i].x && a[0].y == a[i].y) kt2 = 1;
+	}
+	if (kt1 == 1 || kt2 == 1) return false;
+	return true;
 }
+
 
 
 int main()
@@ -89,8 +96,9 @@ int main()
 		else if (ph == 3) y--;
 		check = sn.GameOver(x, y);
 		sn.Paint();
-		Sleep(300);
+		Sleep(150);
 	}
+	_getch();
 	return 0;
 }
 
