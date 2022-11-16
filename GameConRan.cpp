@@ -47,6 +47,12 @@ public:
 		a[0].x = w;
 		a[0].y = t;
 	}
+	void Direction(int h, int& x, int& y) {
+		if (h == 0) x++;
+		else if (h == 1) x--;
+		else if (h == 2) y++;
+		else if (h == 3) y--;
+	}
 };
 
 
@@ -68,10 +74,7 @@ void play()
 		}
 		sn.Del_data();
 		sn.Move(x, y);
-		if (h == 0) x++;
-		else if (h == 1) x--;
-		else if (h == 2) y++;
-		else if (h == 3) y--;
+		sn.Direction(h, x, y);
 		sn.Paint();
 		Sleep(150);
 	}
@@ -81,3 +84,4 @@ int main()
 	play();
 	return 0;
 }
+
