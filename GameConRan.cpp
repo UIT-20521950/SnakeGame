@@ -439,7 +439,7 @@ void printInfo()
 		xcu = x;
 		ycu = y;
 		gotoXY(x, y);
-		cout << "Member 4: Nguyen Hoang Thien";
+		cout << "Member 4: Nguyen Hoan Thien";
 		y--;
 		if (y == 17)
 			break;
