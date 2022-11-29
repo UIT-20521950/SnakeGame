@@ -1,276 +1,27 @@
-//#include <iostream>
-//#include <windows.h>
-//#include <cstdlib>
-//#include <conio.h>
-//#include "MyLib.h"
-//
-//#define MAX 100
-//
-//using namespace std;
-//
-//int len = 4;
-//int const width = 80;
-//int const height = 20;
-//char head = '0', tail = 'o';
-//int delay = 200;
-//
-//void Dokho();
-//void Skin();
-//void Menu();
-//void Wall();
-//
-//struct Point {
-//	int x, y;
-//};
-//class Snake
-//{
-//public:
-//	Point a[MAX];
-//	Snake() {
-//		int w = 16, t = 3;
-//		for (int i = 0; i < len; i++) {
-//			a[i].x = w;
-//			a[i].y = t;
-//			w--;
-//		}
-//	}
-//	void Paint() {
-//		SetColor(1);
-//		for (int i = 0; i < len; i++) {
-//			gotoXY(a[i].x, a[i].y);
-//			if (i == 0) cout << head;
-//			else cout << tail;
-//		}
-//	}
-//	void Del_data() {
-//		for (int i = 0; i < len; i++) {
-//			gotoXY(a[i].x, a[i].y);
-//			cout << " ";
-//		}
-//	}
-//	void Move(int w, int t) {
-//		for (int i = len; i > 0; i--) {
-//			a[i].x = a[i - 1].x;
-//			a[i].y = a[i - 1].y;
-//		}
-//		a[0].x = w;
-//		a[0].y = t;
-//	}
-//	void Direction(int h, int &w, int &t) {
-//		if (h == 0) w++;
-//		else if (h == 1) w--;
-//		else if (h == 2) t++;
-//		else if (h == 3) t--;
-//	}
-//	bool Gameover(int w, int t) {
-//		int th1 = 0, th2 = 0;
-//		if (w == 10 || w == 89 || t == 0 || t == 19) th1 = 1;
-//		for (int i = 1; i < len; i++) {
-//			if (a[0].x == a[i].x && a[0].y == a[i].y) th2 = 1;
-//		}
-//		if (th1 == 1 || th2 == 1) {
-//			len = 4;
-//			return false;
-//		}
-//		return true;
-//	}
-//	void Food(int &w, int &t) {
-//		w = rand() % (88 - 11 + 1) + 11;
-//		t = rand() % (18 - 1 + 1) + 1;
-//		SetColor(2);
-//		gotoXY(w, t);
-//		cout << "$";
-//	}
-//	void Check_food(int &w, int &t) {
-//		for (int i = 1; i < len; i++) {
-//			if (a[i].x == w && a[i].y == t) {
-//				i = 1;
-//				Food(w, t);
-//			}
-//		}
-//	}
-//	void Eat(int &l, int &w, int &t, int &Score) {
-//		if (a[0].x == w && a[0].y == t) {
-//			l++;
-//			Score += 5;
-//			gotoXY(40, 21);
-//			cout << "Score: " << Score;
-//			Food(w, t);
-//			Check_food(w, t);
-//		}
-//	}
-//	void End(int Score) {
-//		system("cls");
-//		SetColor(7);
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		cout << "\n\tKet thuc";
-//		cout << "\n\tYour score: " << Score << "\n";
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		cout << "\n";
-//		system("pause");
-//	}
-//};
-//
-//
-//void play()
-//{
-//	system("cls");
-//	srand(time(NULL));
-//	bool check = true;
-//	Snake sn;
-//	Wall();
-//	sn.Paint();
-//	int x = 17, y = 3, h = 0, fx = 0, fy = 0, Score = 0;
-//	char kt;
-//	sn.Food(fx, fy);
-//	sn.Check_food(fx, fy);
-//	while (check == true)
-//	{
-//		if (_kbhit()) {
-//			kt = _getch();
-//			if (kt == 'd') h = 0;
-//			if (kt == 'a') h = 1;
-//			if (kt == 's') h = 2;
-//			if (kt == 'w') h = 3;
-//		}
-//		sn.Del_data();
-//		sn.Move(x, y);
-//		sn.Direction(h, x, y);
-//		sn.Eat(len, fx, fy, Score);
-//		sn.Paint();
-//		if (!sn.Gameover(x, y)) check = false;
-//		Sleep(delay);
-//	}
-//	sn.End(Score);
-//}
-//int main()
-//{
-//	ShowCur(0);
-//	Menu();
-//	return 0;
-//}
-//void Wall()
-//{
-//	int x = 10;
-//	SetColor(7);
-//	for (int i = 0; i < height; i++) {
-//		gotoXY(x, i);
-//		for (int j = 0; j < width; j++) {
-//			if (i == 0 || i == height - 1) cout << "=";
-//			else {
-//				if (j == 0 || j == width - 1) cout << "|";
-//				else cout << " ";
-//			}
-//		}
-//		cout << "\n";
-//	}
-//}
-//void Dokho()
-//{
-//	int check = 0;
-//	char ch;
-//	while (check == 0)
-//	{
-//		system("cls");
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		cout << "\n\tChon skin";
-//		cout << "\n\t1) Easy";
-//		cout << "\n\t2) Normal";
-//		cout << "\n\t3) Hard";
-//		cout << "\n\t4) Back\n";
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		ch = _getch();
-//		if (ch == 49 || ch == 50 || ch == 51 || ch == 52) {
-//			check = 1;
-//			if (ch == 49) delay = 250;
-//			else if (ch == 50) delay = 150;
-//			else if (ch == 51) delay = 50;
-//		}
-//	}
-//}
-//void Skin()
-//{
-//	int check = 0;
-//	char ch;
-//	while (check == 0) {
-//		system("cls");
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		cout << "\n\tChon skin";
-//		cout << "\n\t1) oo0";
-//		cout << "\n\t2) xxX";
-//		cout << "\n\t3) Back\n";
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		ch = _getch();
-//		if (ch == 49) {
-//			head = '0'; tail = 'o';
-//			check = 1;
-//		}
-//		else if (ch == 50) {
-//			head = 'X'; tail = 'x';
-//			check = 1;
-//		}
-//		else if (ch == 51) check = 1;
-//	}
-//}
-//void Menu()
-//{
-//	int check = 0;
-//	char ch;
-//	while (check == 0) {
-//		system("cls");
-//		SetColor(7);
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		cout << "\n\t1) Play";
-//		cout << "\n\t2) Skin";
-//		cout << "\n\t3) Do kho";
-//		cout << "\n\t4) Huong dan";
-//		cout << "\n\t5) Exit\n";
-//		for (int i = 0; i < 40; i++) cout << "=";
-//		ch = _getch();
-//		if (ch == 49) play();
-//		else if (ch == 50) Skin();
-//		else if (ch == 51) Dokho();
-//		else if (ch == 52) {
-//			system("cls");
-//			for (int i = 0; i < 40; i++) cout << "=";
-//			cout << "\n\tA: Qua trai";
-//			cout << "\n\tD: Qua phai";
-//			cout << "\n\tW: Di len";
-//			cout << "\n\tS: Di xuong\n";
-//			for (int i = 0; i < 40; i++) cout << "=";
-//			cout << "\n";
-//			system("pause");
-//		}
-//		else if (ch == 53) check = 1;
-//	}
-//}
-//
-//
-//
-//
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <windows.h>
 #include <cstdlib>
 #include <conio.h>
-#include "Mylib.h"
+#include "mylib.h"
 #include <iomanip>
-
 
 #define MAX 100
 
 using namespace std;
 
-int len = 4;
+int len = 3;
+int od = 0;
 int const width = 84;
 int const height = 24;
-char head = (char)254, tail = (char)254;
-int delay = 200;
-
-void Dokho();
-void Skin();
+int delay = 250;
+char head = (char)2;
+char tail = (char)2;
+void PlayGame();
 void Menu();
+void Skin();
+void Dokho();
 void Wall();
 void printWelcome();
 void printInfo();
@@ -283,139 +34,161 @@ class Snake
 {
 public:
 	Point a[MAX];
-	Snake() {
-		int w = 15, t = 5;
-		for (int i = 0; i < len; i++) {
-			a[i].x = w;
-			a[i].y = t;
-			w--;
-		}
-	}
-	void Paint() {
-		SetColor(1);
-		for (int i = 0; i < len; i++) {
-			gotoXY(a[i].x, a[i].y);
-			if (i == 0) cout << head;
-			else cout << tail;
-		}
-	}
-	void Del_data() {
-		for (int i = 0; i < len; i++) {
-			gotoXY(a[i].x, a[i].y);
-			cout << " ";
-		}
-	}
-	void Move(int w, int t) {
-		for (int i = len; i > 0; i--) {
-			a[i].x = a[i - 1].x;
-			a[i].y = a[i - 1].y;
-		}
-		a[0].x = w;
-		a[0].y = t;
-	}
-	void Direction(int h, int& w, int& t) {
-		if (h == 0) w++;
-		else if (h == 1) w--;
-		else if (h == 2) t++;
-		else if (h == 3) t--;
-	}
-	bool Gameover(int w, int t) {
-		int th1 = 0, th2 = 0;
-		if (w == 10 || w == 89 || t == 4 || t == 23) th1 = 1;
-		for (int i = 1; i < len; i++) {
-			if (a[0].x == a[i].x && a[0].y == a[i].y) th2 = 1;
-		}
-		if (th1 == 1 || th2 == 1) {
-			len = 4;
-			return false;
-		}
-		return true;
-	}
-	void Food(int& w, int& t) {
-		w = rand() % (88 - 11 + 1) + 11;
-		t = rand() % (22 - 5 + 1) + 5;
-		SetColor(3);
-		gotoXY(w, t);
-		cout << (char)3;
-	}
-	void Check_food(int& w, int& t) {
-		for (int i = 1; i < len; i++) {
-			if (a[i].x == w && a[i].y == t) {
-				i = 1;
-				Food(w, t);
-			}
-		}
-	}
-	void Eat(int& l, int& w, int& t, int& Score) {
-		if (a[0].x == w && a[0].y == t) {
-			l++;
-			Score += 5;
-			gotoXY(40, 25);
-			cout << "Score: " << Score;
-			Food(w, t);
-			Check_food(w, t);
-		}
-	}
-	void End(int Score) {
-		system("cls");
-		SetColor(12);
-		for (int i = 0; i < 40; i++) cout << "=";
-		SetColor(9);
-		cout << "\n\tKet thuc";
-		cout << "\n\tYour score: " << Score << "\n";
-		SetColor(12);
-		for (int i = 0; i < 40; i++) cout << "=";
-		cout << "\n";
-		system("pause");
-	}
+	Snake();
+	void Paint();
+	void Del_data();
+	void Move(int w, int t);
+	void Direction(int h, int& w, int& t);
+	bool GameOver(int w, int t);
+	void Food(int& w, int& t);
+	void Check_food(int& w, int& t);
+	bool Eat(int w, int t);
+	void End(int Score);
 };
-
-
-void play()
+//Ham khoi tao vi tri cho ran
+Snake::Snake()
 {
-	SetConsoleCP(437);
-	SetConsoleOutputCP(437);
-	system("cls");
-	srand(time(NULL));
-	bool check = true;
-	Snake sn;
-	Wall();
-	sn.Paint();
-	int i;
-	int x = 12, y = 5, h = 0, fx = 0, fy = 0, Score = 0;
-	char kt;
-	sn.Food(fx, fy);
-	sn.Check_food(fx, fy);
-	while (check == true)
-	{
-		if (_kbhit()) {
-			kt = _getch();
-			if (kt == 'd') h = 0;
-			if (kt == 'a') h = 1;
-			if (kt == 's') h = 2;
-			if (kt == 'w') h = 3;
-		}
-		sn.Del_data();
-		sn.Move(x, y);
-		sn.Direction(h, x, y);
-		sn.Eat(len, fx, fy, Score);
-		sn.Paint();
-		if (!sn.Gameover(x, y)) check = false;
-		Sleep(delay);
+	int w = 15, t = 5;
+	for (int i = 0; i < len; i++) {
+		a[i].x = w;
+		a[i].y = t;
+		w--;
 	}
-	sn.End(Score);
 }
+//Ham ve ran
+void Snake::Paint()
+{
+	for (int i = 0; i < len; i++) {
+		gotoXY(a[i].x, a[i].y);
+		if (i == 0) cout << head;
+		else cout << tail;
+	}
+}
+//Xoa vi tri ran
+void Snake::Del_data()
+{
+	for (int i = 0; i < len; i++) {
+		gotoXY(a[i].x, a[i].y);
+		cout << " ";
+	}
+}
+//Ran di chuyen
+void Snake::Move(int w, int t)
+{
+	for (int i = len; i > 0; i--) {
+		a[i].x = a[i - 1].x;
+		a[i].y = a[i - 1].y;
+	}
+	a[0].x = w;
+	a[0].y = t;
+}
+//Ham chon phuon huong cho ran
+void Snake::Direction(int h, int& w, int& t) {
+	if (h == 0 && od == 1 || h == 1 && od == 0 || h == 2 && od == 3 || h == 3 && od == 2) h = od; //khong cho ran chay nguoc lai
+	od = h;
+	if (h == 0) w++;
+	else if (h == 1) w--;
+	else if (h == 2) t++;
+	else if (h == 3) t--;
+}
+//Ket thuc tro choi
+bool Snake::GameOver(int w, int t)
+{
+	int kt1 = 0, kt2 = 0;
+	if (w == 10 || w == 89 || t == 4 || t == 23) kt1 = 1;
+	for (int i = 1; i < len; i++) {
+		if (a[0].x == a[i].x && a[0].y == a[i].y) kt2 = 1;
+	}
+	if (kt1 == 1 || kt2 == 1) {
+		len = 3;
+		return false;
+	}
+	return true;
+}
+//Ham tao thuc an
+void Snake::Food(int& w, int& t)
+{
+	w = rand() % (88 - 11 + 1) + 11;
+	t = rand() % (22 - 5 + 1) + 5;
+	SetColor(3);
+	gotoXY(w, t);
+	cout << (char)3;
+}
+//Check thuc an co trung voi duoi ran, trung thi tao lai
+void Snake::Check_food(int& w, int& t) {
+	for (int i = 1; i < len; i++) {
+		if (a[i].x == w && a[i].y == t) {
+			i = 1;
+			Food(w, t);
+		}
+	}
+}
+//Ham kiem tra xem ran da an moi chua
+bool Snake::Eat(int w, int t)
+{
+	if (w == a[0].x && t == a[0].y) return true;
+	return false;
+}
+//Ket thuc
+void Snake::End(int Score) {
+	system("cls");
+	SetColor(12);
+	for (int i = 0; i < 40; i++) cout << "=";
+	SetColor(9);
+	cout << "\n\tKet thuc";
+	cout << "\n\tYour score: " << Score << "\n";
+	SetColor(12);
+	for (int i = 0; i < 40; i++) cout << "=";
+	cout << "\n";
+	system("pause");
+}
+
+
 int main()
 {
 	ShowCur(0);
 	printWelcome();
 	printInfo();
 	printLoadingBar();
-
-	// =============================
 	Menu();
-
 	return 0;
+}
+void PlayGame()
+{
+	ShowCur(0);
+	srand(time(NULL));
+	bool check = true;
+	Snake sn;
+	Wall();
+	sn.Paint();
+	char k;
+	int x = 16, y = 5, ph = 0, score = 0, fx = 0, fy = 0;
+	sn.Food(fx, fy);
+	sn.Check_food(fx, fy);
+	while (check == true) {
+		sn.Del_data();
+		if (_kbhit()) {
+			k = _getch();
+			if (k == 'd') ph = 0;
+			if (k == 'a') ph = 1;
+			if (k == 's') ph = 2;
+			if (k == 'w') ph = 3;
+		}
+		sn.Move(x, y);
+		sn.Direction(ph, x, y);
+		if (sn.Eat(fx, fy) == true) {
+			len++;
+			score += 5;
+			gotoXY(40, 25);
+			cout << "Score: " << score;
+			sn.Food(fx, fy);
+			sn.Check_food(fx, fy);
+		}
+		check = sn.GameOver(x, y);
+		sn.Paint();
+		Sleep(delay);
+	}
+	sn.End(score);
 }
 void Wall()
 {
@@ -494,19 +267,15 @@ void Skin()
 		for (int i = 0; i < 40; i++) cout << "=";
 		/*-----------------------------------------------------------------------------------------*/
 		ch = _getch();
-		if (ch == 49) {
-			head = (char)153; tail = 'o';
+		if (ch == 49 || ch == 50 || ch == 51 || ch == 52) {
 			check = 1;
+			if (ch == 49) {
+				head = (char)153;
+				tail = 'o';
+			}
+			else if (ch == 50) head = tail = (char)2;
+			else if (ch == 51) head = tail = (char)254;
 		}
-		else if (ch == 50) {
-			head = tail = (char)2;
-			check = 1;
-		}
-		else if (ch == 51) {
-			head = tail = (char)254;
-			check = 1;
-		}
-		else if (ch == 52) check = 1;
 	}
 }
 void Menu()
@@ -526,24 +295,22 @@ void Menu()
 		cout << ">>>>GAME RAN SAN MOI<<<<";
 		SetColor(13);
 		gotoXY(60, 12);
-		cout << "Play";
+		cout << "1) Play";
 		gotoXY(60, 13);
-		cout << "Skin";
+		cout << "2) Skin";
 		gotoXY(59, 14);
-		cout << "Do kho";
+		cout << "3) Do kho";
 		gotoXY(58, 15);
-		cout << "Huong dan";
+		cout << "4) Huong dan";
 		gotoXY(60, 16);
-		cout << "Exit\n";
+		cout << "5) Exit\n";
 		SetColor(4);
-		gotoXY(44, 17);
-		cout << "***CHON THEO SO THU TU 1-2-3-4-5***\n";
 		SetColor(12);
-		gotoXY(42, 18);
+		gotoXY(42, 17);
 		for (int i = 0; i < 40; i++) cout << "=";
 		/*-----------------------------------------------------------------------------------------*/
 		ch = _getch();
-		if (ch == 49) play();
+		if (ch == 49) PlayGame();
 		else if (ch == 50) Skin();
 		else if (ch == 51) Dokho();
 		else if (ch == 52) { /*huong dan*/
@@ -645,7 +412,7 @@ void printInfo()
 		y--;
 		if (y == 14)
 			break;
-		Sleep(150);
+		Sleep(100);
 	}
 	x = 10, y = 22;
 	xcu = -1, ycu = -1;
@@ -661,7 +428,7 @@ void printInfo()
 		y--;
 		if (y == 15)
 			break;
-		Sleep(150);
+		Sleep(100);
 	}
 	x = 10, y = 22;
 	xcu = -1, ycu = -1;
@@ -677,7 +444,7 @@ void printInfo()
 		y--;
 		if (y == 16)
 			break;
-		Sleep(150);
+		Sleep(100);
 	}
 	x = 10, y = 22;
 	xcu = -1, ycu = -1;
@@ -685,7 +452,7 @@ void printInfo()
 	{
 		// xoa cu
 		gotoXY(xcu, ycu);
-		cout << "                            ";
+		cout << "                           ";
 		xcu = x;
 		ycu = y;
 		gotoXY(x, y);
@@ -693,7 +460,7 @@ void printInfo()
 		y--;
 		if (y == 17)
 			break;
-		Sleep(150);
+		Sleep(100);
 	}
 	x = 10, y = 22;
 	xcu = -1, ycu = -1;
@@ -709,7 +476,7 @@ void printInfo()
 		y--;
 		if (y == 18)
 			break;
-		Sleep(150);
+		Sleep(100);
 	}
 
 }
@@ -733,11 +500,11 @@ void printLoadingBar()
 		gotoXY(i, 21);
 		if (i <= 44)
 		{
-			Sleep(50);
+			Sleep(2);
 		}
 		else
 		{
-			Sleep(20);
+			Sleep(2);
 		}
 		cout << x;
 		gotoXY(82, 21);
